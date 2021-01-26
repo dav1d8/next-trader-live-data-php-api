@@ -76,6 +76,7 @@ Class | Method | HTTP request | Description
 
 ## Models
 
+- [Ohlcv](docs/Model/Ohlcv.md)
 
 ## Authorization
 All endpoints do not require authorization.

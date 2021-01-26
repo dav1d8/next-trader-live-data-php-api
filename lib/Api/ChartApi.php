@@ -125,7 +125,7 @@ class ChartApi
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return object
+     * @return \OpenAPI\Client\Model\Ohlcv[]
      */
     public function getChart($symbol, $interval)
     {
@@ -143,7 +143,7 @@ class ChartApi
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of object, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAPI\Client\Model\Ohlcv[], HTTP status code, HTTP response headers (array of strings)
      */
     public function getChartWithHttpInfo($symbol, $interval)
     {
@@ -180,20 +180,20 @@ class ChartApi
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('object' === '\SplFileObject') {
+                    if ('\OpenAPI\Client\Model\Ohlcv[]' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, 'object', []),
+                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\Ohlcv[]', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = 'object';
+            $returnType = '\OpenAPI\Client\Model\Ohlcv[]';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -212,7 +212,7 @@ class ChartApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        'object',
+                        '\OpenAPI\Client\Model\Ohlcv[]',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -256,7 +256,7 @@ class ChartApi
      */
     public function getChartAsyncWithHttpInfo($symbol, $interval)
     {
-        $returnType = 'object';
+        $returnType = '\OpenAPI\Client\Model\Ohlcv[]';
         $request = $this->getChartRequest($symbol, $interval);
 
         return $this->client
