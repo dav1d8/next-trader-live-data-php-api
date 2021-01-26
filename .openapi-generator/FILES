@@ -1,0 +1,16 @@
+.gitignore
+.openapi-generator-ignore
+.php_cs
+.travis.yml
+README.md
+composer.json
+docs/Api/ChartApi.md
+git_push.sh
+lib/ApiException.php
+lib/Api/ChartApi.php
+lib/Configuration.php
+lib/HeaderSelector.php
+lib/Model/ModelInterface.php
+lib/ObjectSerializer.php
+phpunit.xml.dist
+test/Api/ChartApiTest.php
