@@ -60,6 +60,7 @@ class Ohlcv implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
+        'time' => 'int',
         'open' => 'float',
         'high' => 'float',
         'low' => 'float',
@@ -75,6 +76,7 @@ class Ohlcv implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
+        'time' => null,
         'open' => null,
         'high' => null,
         'low' => null,
@@ -109,6 +111,7 @@ class Ohlcv implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
+        'time' => 'time',
         'open' => 'open',
         'high' => 'high',
         'low' => 'low',
@@ -122,6 +125,7 @@ class Ohlcv implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
+        'time' => 'setTime',
         'open' => 'setOpen',
         'high' => 'setHigh',
         'low' => 'setLow',
@@ -135,6 +139,7 @@ class Ohlcv implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
+        'time' => 'getTime',
         'open' => 'getOpen',
         'high' => 'getHigh',
         'low' => 'getLow',
@@ -202,6 +207,7 @@ class Ohlcv implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
+        $this->container['time'] = $data['time'] ?? null;
         $this->container['open'] = $data['open'] ?? null;
         $this->container['high'] = $data['high'] ?? null;
         $this->container['low'] = $data['low'] ?? null;
@@ -232,6 +238,30 @@ class Ohlcv implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets time
+     *
+     * @return int|null
+     */
+    public function getTime()
+    {
+        return $this->container['time'];
+    }
+
+    /**
+     * Sets time
+     *
+     * @param int|null $time time
+     *
+     * @return self
+     */
+    public function setTime($time)
+    {
+        $this->container['time'] = $time;
+
+        return $this;
+    }
 
     /**
      * Gets open

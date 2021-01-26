@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**time** | **int** |  | [optional]
 **open** | **float** |  | [optional]
 **high** | **float** |  | [optional]
 **low** | **float** |  | [optional]

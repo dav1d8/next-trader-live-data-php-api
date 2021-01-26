@@ -14,4 +14,3 @@ lib/Model/ModelInterface.php
 lib/Model/Ohlcv.php
 lib/ObjectSerializer.php
 phpunit.xml.dist
-test/Model/OhlcvTest.php
