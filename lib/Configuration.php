@@ -84,7 +84,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'http://localhost/v2';
+    protected $host = 'http://localhost';
 
     /**
      * User agent of the HTTP request, set to "OpenAPI-Generator/{version}/PHP" by default
@@ -439,7 +439,7 @@ class Configuration
     {
         return [
             [
-                "url" => "/v2",
+                "url" => "/",
                 "description" => "No description provided",
             ]
         ];

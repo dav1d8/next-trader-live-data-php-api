@@ -7,7 +7,7 @@ Description
 
 ### Requirements
 
-PHP 7.2 and later .
+PHP 7.2 and later.
 
 ### Composer
 
@@ -58,7 +58,8 @@ $symbol = 'symbol_example'; // string | symbol name
 $interval = 'interval_example'; // string | symbol name
 
 try {
-    $apiInstance->getChart($symbol, $interval);
+    $result = $apiInstance->getChart($symbol, $interval);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ChartApi->getChart: ', $e->getMessage(), PHP_EOL;
 }
@@ -67,7 +68,7 @@ try {
 
 ## API Endpoints
 
-All URIs are relative to *http://localhost/v2*
+All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

@@ -1,6 +1,6 @@
 # OpenAPI\Client\ChartApi
 
-All URIs are relative to http://localhost/v2.
+All URIs are relative to http://localhost.
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -10,7 +10,7 @@ Method | HTTP request | Description
 ## `getChart()`
 
 ```php
-getChart($symbol, $interval)
+getChart($symbol, $interval): object
 ```
 
 Get candle chart
@@ -34,7 +34,8 @@ $symbol = 'symbol_example'; // string | symbol name
 $interval = 'interval_example'; // string | symbol name
 
 try {
-    $apiInstance->getChart($symbol, $interval);
+    $result = $apiInstance->getChart($symbol, $interval);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ChartApi->getChart: ', $e->getMessage(), PHP_EOL;
 }
@@ -49,7 +50,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -58,7 +59,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
