@@ -4,13 +4,11 @@
 README.md
 composer.json
 docs/Api/ChartApi.md
-docs/Model/Ohlcv.md
 git_push.sh
 lib/ApiException.php
 lib/Api/ChartApi.php
 lib/Configuration.php
 lib/HeaderSelector.php
 lib/Model/ModelInterface.php
-lib/Model/Ohlcv.php
 lib/ObjectSerializer.php
 phpunit.xml.dist

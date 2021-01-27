@@ -10,7 +10,7 @@ Method | HTTP request | Description
 ## `getChart()`
 
 ```php
-getChart($symbol, $interval, $since, $limit): \OpenAPI\Client\Model\Ohlcv[]
+getChart($symbol, $interval, $since, $limit): string[][]
 ```
 
 Get candle chart
@@ -54,7 +54,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\OpenAPI\Client\Model\Ohlcv[]**](../Model/Ohlcv.md)
+[**string[][]**](../Model/array.md)
 
 ### Authorization
 
