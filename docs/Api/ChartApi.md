@@ -10,7 +10,7 @@ Method | HTTP request | Description
 ## `getChart()`
 
 ```php
-getChart($symbol, $interval, $since, $limit): string[][]
+getChart($symbol, $interval, $since, $limit): object[]
 ```
 
 Get candle chart
@@ -54,7 +54,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**string[][]**](../Model/array.md)
+**object[]**
 
 ### Authorization
 
