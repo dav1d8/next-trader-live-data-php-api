@@ -4,13 +4,13 @@ All URIs are relative to http://localhost.
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getChart()**](ChartApi.md#getChart) | **GET** /chart/{symbol}/{interval} | Get candle chart
+[**getChart()**](ChartApi.md#getChart) | **GET** /chart | Get candle chart
 
 
 ## `getChart()`
 
 ```php
-getChart($symbol, $interval): \OpenAPI\Client\Model\Ohlcv[]
+getChart($symbol, $interval, $since, $limit): \OpenAPI\Client\Model\Ohlcv[]
 ```
 
 Get candle chart
@@ -30,11 +30,13 @@ $apiInstance = new OpenAPI\Client\Api\ChartApi(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$symbol = 'symbol_example'; // string | symbol name
-$interval = 'interval_example'; // string | symbol name
+$symbol = 'symbol_example'; // string | symbol
+$interval = 'interval_example'; // string | interval
+$since = 56; // int | since time
+$limit = 56; // int | limit records
 
 try {
-    $result = $apiInstance->getChart($symbol, $interval);
+    $result = $apiInstance->getChart($symbol, $interval, $since, $limit);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ChartApi->getChart: ', $e->getMessage(), PHP_EOL;
@@ -45,8 +47,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **symbol** | **string**| symbol name |
- **interval** | **string**| symbol name |
+ **symbol** | **string**| symbol |
+ **interval** | **string**| interval |
+ **since** | **int**| since time | [optional]
+ **limit** | **int**| limit records | [optional]
 
 ### Return type
 

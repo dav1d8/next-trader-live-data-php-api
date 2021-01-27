@@ -120,16 +120,18 @@ class ChartApi
      *
      * Get candle chart
      *
-     * @param  string $symbol symbol name (required)
-     * @param  string $interval symbol name (required)
+     * @param  string $symbol symbol (required)
+     * @param  string $interval interval (required)
+     * @param  int $since since time (optional)
+     * @param  int $limit limit records (optional)
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\Ohlcv[]
+     * @return \OpenAPI\Client\Model\Ohlcv[]|string
      */
-    public function getChart($symbol, $interval)
+    public function getChart($symbol, $interval, $since = null, $limit = null)
     {
-        list($response) = $this->getChartWithHttpInfo($symbol, $interval);
+        list($response) = $this->getChartWithHttpInfo($symbol, $interval, $since, $limit);
         return $response;
     }
 
@@ -138,16 +140,18 @@ class ChartApi
      *
      * Get candle chart
      *
-     * @param  string $symbol symbol name (required)
-     * @param  string $interval symbol name (required)
+     * @param  string $symbol symbol (required)
+     * @param  string $interval interval (required)
+     * @param  int $since since time (optional)
+     * @param  int $limit limit records (optional)
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\Ohlcv[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAPI\Client\Model\Ohlcv[]|string, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getChartWithHttpInfo($symbol, $interval)
+    public function getChartWithHttpInfo($symbol, $interval, $since = null, $limit = null)
     {
-        $request = $this->getChartRequest($symbol, $interval);
+        $request = $this->getChartRequest($symbol, $interval, $since, $limit);
 
         try {
             $options = $this->createHttpClientOption();
@@ -191,6 +195,18 @@ class ChartApi
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
+                case 400:
+                    if ('string' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, 'string', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
             }
 
             $returnType = '\OpenAPI\Client\Model\Ohlcv[]';
@@ -217,6 +233,14 @@ class ChartApi
                     );
                     $e->setResponseObject($data);
                     break;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        'string',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
             }
             throw $e;
         }
@@ -227,15 +251,17 @@ class ChartApi
      *
      * Get candle chart
      *
-     * @param  string $symbol symbol name (required)
-     * @param  string $interval symbol name (required)
+     * @param  string $symbol symbol (required)
+     * @param  string $interval interval (required)
+     * @param  int $since since time (optional)
+     * @param  int $limit limit records (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getChartAsync($symbol, $interval)
+    public function getChartAsync($symbol, $interval, $since = null, $limit = null)
     {
-        return $this->getChartAsyncWithHttpInfo($symbol, $interval)
+        return $this->getChartAsyncWithHttpInfo($symbol, $interval, $since, $limit)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -248,16 +274,18 @@ class ChartApi
      *
      * Get candle chart
      *
-     * @param  string $symbol symbol name (required)
-     * @param  string $interval symbol name (required)
+     * @param  string $symbol symbol (required)
+     * @param  string $interval interval (required)
+     * @param  int $since since time (optional)
+     * @param  int $limit limit records (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getChartAsyncWithHttpInfo($symbol, $interval)
+    public function getChartAsyncWithHttpInfo($symbol, $interval, $since = null, $limit = null)
     {
         $returnType = '\OpenAPI\Client\Model\Ohlcv[]';
-        $request = $this->getChartRequest($symbol, $interval);
+        $request = $this->getChartRequest($symbol, $interval, $since, $limit);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -296,13 +324,15 @@ class ChartApi
     /**
      * Create request for operation 'getChart'
      *
-     * @param  string $symbol symbol name (required)
-     * @param  string $interval symbol name (required)
+     * @param  string $symbol symbol (required)
+     * @param  string $interval interval (required)
+     * @param  int $since since time (optional)
+     * @param  int $limit limit records (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getChartRequest($symbol, $interval)
+    public function getChartRequest($symbol, $interval, $since = null, $limit = null)
     {
         // verify the required parameter 'symbol' is set
         if ($symbol === null || (is_array($symbol) && count($symbol) === 0)) {
@@ -317,31 +347,43 @@ class ChartApi
             );
         }
 
-        $resourcePath = '/chart/{symbol}/{interval}';
+        $resourcePath = '/chart';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-
-
-        // path params
+        // query params
+        if (is_array($symbol)) {
+            $symbol = ObjectSerializer::serializeCollection($symbol, '', true);
+        }
         if ($symbol !== null) {
-            $resourcePath = str_replace(
-                '{' . 'symbol' . '}',
-                ObjectSerializer::toPathValue($symbol),
-                $resourcePath
-            );
+            $queryParams['symbol'] = $symbol;
         }
-        // path params
+        // query params
+        if (is_array($interval)) {
+            $interval = ObjectSerializer::serializeCollection($interval, '', true);
+        }
         if ($interval !== null) {
-            $resourcePath = str_replace(
-                '{' . 'interval' . '}',
-                ObjectSerializer::toPathValue($interval),
-                $resourcePath
-            );
+            $queryParams['interval'] = $interval;
         }
+        // query params
+        if (is_array($since)) {
+            $since = ObjectSerializer::serializeCollection($since, '', true);
+        }
+        if ($since !== null) {
+            $queryParams['since'] = $since;
+        }
+        // query params
+        if (is_array($limit)) {
+            $limit = ObjectSerializer::serializeCollection($limit, '', true);
+        }
+        if ($limit !== null) {
+            $queryParams['limit'] = $limit;
+        }
+
+
 
 
         if ($multipart) {
